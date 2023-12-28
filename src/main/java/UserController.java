@@ -2,9 +2,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -44,4 +42,16 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Benutzer nicht gefunden");
         }
     }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<String>> getAllUserNames() {
+        List<String> userNames = new ArrayList<>();
+        Iterable<User> users = repository.findAll();
+        for (User user : users) {
+            userNames.add(user.getName());
+        }
+        return ResponseEntity.ok(userNames);
+    }
+
+
 }
