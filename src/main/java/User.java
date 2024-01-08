@@ -6,14 +6,14 @@ import jakarta.persistence.Table;
 @Table(name = "users")
 public class User {
     @Id
-    private int userId;
+    private int user_id;
 
-    public int getUserId() {
-        return userId;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser_id(int userId) {
+        this.user_id = userId;
     }
 
     public String getName() {

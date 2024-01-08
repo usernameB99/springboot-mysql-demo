@@ -11,7 +11,7 @@ public class Need {
     private String type;
 
     @ManyToOne
-    @JoinColumn(name = "owner", referencedColumnName = "userId")
+    @JoinColumn(name = "owner", referencedColumnName = "userid")
     private User owner;
 
     public int getNeedId() {
