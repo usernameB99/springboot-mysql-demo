@@ -1,3 +1,4 @@
+package com.example.springbootmysqldemo;
 import jakarta.persistence.*;
 
 @Entity

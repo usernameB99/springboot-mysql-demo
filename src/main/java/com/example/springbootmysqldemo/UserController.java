@@ -1,3 +1,5 @@
+package com.example.springbootmysqldemo;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +15,7 @@ public class UserController {
         this.repository = repository;
     }
 
-    @PostMapping("/login")
+    @PostMapping("/login")                                                            //not in use
     public ResponseEntity<Map<String, String>> login(@RequestBody User loginUser) {
         Optional<User> optionalUser = repository.findByEmail(loginUser.getEmail());
         Map<String, String> response = new HashMap<>();
@@ -32,7 +34,22 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/getHashedPassword")
+    @GetMapping("/getUserData")
+    public ResponseEntity<Map<String, String>> getUserData(@RequestParam String email) {
+        Optional<User> optionalUser = repository.findByEmail(email);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            Map<String, String> userData = new HashMap<>();
+            userData.put("password", user.getPassword());
+            userData.put("userId", String.valueOf(user.getUserid()));
+            userData.put("name", user.getName());
+            return ResponseEntity.ok(userData);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("error", "Benutzer nicht gefunden"));
+        }
+    }
+
+    @GetMapping("/getHashedPassword")                                                   //for login - password only
     public ResponseEntity<String> getHashedPassword(@RequestParam String email) {
         Optional<User> optionalUser = repository.findByEmail(email);
         if (optionalUser.isPresent()) {
@@ -43,34 +60,7 @@ public class UserController {
         }
     }
 
-//    @GetMapping("/users")
-//    public ResponseEntity<List<String>> getAllUserNames() {
-//        List<String> userNames = new ArrayList<>();
-//        Iterable<User> users = repository.findAll();
-//        for (User user : users) {
-//            userNames.add(user.getName());
-//        }
-//        return ResponseEntity.ok(userNames);
-//    }
-
-//    @GetMapping("/users")
-//    public ResponseEntity<Object> getAllUserNames() {
-//        Map<String, Object> response = new HashMap<>();
-//        try {
-//            List<String> userNames = new ArrayList<>();
-//            Iterable<User> users = repository.findAll();
-//            for (User user : users) {
-//                userNames.add(user.getName());
-//            }
-//            response.put("userNames", userNames);
-//            return ResponseEntity.ok(response);
-//        } catch (Exception e) {
-//            response.put("error", e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-//        }
-//    }
-
-    @GetMapping("/users")
+    @GetMapping("/users")                                                                          //not in use
     public ResponseEntity<Object> getUserNamesByEmails(@RequestParam List<String> emails) {
         Map<String, Object> response = new HashMap<>();
         try {
@@ -90,25 +80,6 @@ public class UserController {
         }
     }
 
-//    @GetMapping("/users")
-//    public ResponseEntity<List<String>> getAllUserNames() {
-//        Logger logger = LoggerFactory.getLogger(YourClassName.class);
-//        List<String> userNames = new ArrayList<>();
-//        try {
-//            Iterable<User> users = repository.findAll();
-//            for (User user : users) {
-//                userNames.add(user.getName());
-//            }
-//            if (userNames.isEmpty()) {
-//                logger.info("Keine Benutzer gefunden in der Datenbank.");
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Keine Benutzer gefunden");
-//            } else {
-//                logger.info("Benutzer erfolgreich aus der Datenbank abgerufen.");
-//                return ResponseEntity.ok(userNames);
-//            }
-//        } catch (Exception e) {
-//            logger.error("Fehler beim Abrufen der Benutzer aus der Datenbank", e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ein Fehler ist aufgetreten");
-//        }
+
 
 }

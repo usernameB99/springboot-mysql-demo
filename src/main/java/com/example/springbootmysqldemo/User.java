@@ -1,3 +1,5 @@
+package com.example.springbootmysqldemo;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -6,14 +8,14 @@ import jakarta.persistence.Table;
 @Table(name = "users")
 public class User {
     @Id
-    private int user_id;
+    private int userid;  // user_id -> userid
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserid() {
+        return userid;
     }
 
-    public void setUser_id(int userId) {
-        this.user_id = userId;
+    public void setUserid(int userId) {
+        this.userid = userId;
     }
 
     public String getName() {
